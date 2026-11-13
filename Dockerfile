@@ -1,5 +1,10 @@
 FROM evoapicloud/evolution-api:v2.3.7
 
+# Correção do bug do <status> no Baileys (conexão "surda" que cai a cada ~50 min).
+# Ver patch-baileys-status.js. Se o código esperado não existir, o build falha.
+COPY patch-baileys-status.js /tmp/patch-baileys-status.js
+RUN node /tmp/patch-baileys-status.js
+
 ENV SERVER_TYPE=http
 ENV LANGUAGE=en
 
