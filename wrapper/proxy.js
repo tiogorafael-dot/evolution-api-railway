@@ -14,6 +14,12 @@ proxy.on('error', (err, req, res) => {
 });
 
 const server = http.createServer((req, res) => {
+  // Healthcheck do Railway: responde 200 direto do wrapper
+  if (req.url === '/healthz') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('ok');
+    return;
+  }
   if (req.url === '/' && (req.method === 'GET' || req.method === 'HEAD')) {
     res.writeHead(302, { Location: '/manager' });
     res.end();
